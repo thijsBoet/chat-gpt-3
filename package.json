@@ -1,0 +1,24 @@
+{
+  "name": "chat-gpt-3",
+  "version": "1.0.0",
+  "description": "Implementation of chatGPT3 API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thijsBoet/chat-gpt-3.git"
+  },
+  "keywords": [
+    "chatGPT3",
+    "AI",
+    "openAI"
+  ],
+  "author": "matthijs boet & JMS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thijsBoet/chat-gpt-3/issues"
+  },
+  "homepage": "https://github.com/thijsBoet/chat-gpt-3#readme"
+}
