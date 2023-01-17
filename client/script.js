@@ -23,7 +23,7 @@ function typeText(element, text) {
 
 	let typeInterval = setInterval(() => {
 		if (index < text.length) {
-			element.textContent += text.chartAt(index);
+			element.textContent += text.charAt(index);
 			index++;
 		} else {
 			clearInterval(typeInterval);
@@ -35,19 +35,17 @@ const generateUniqueID = () => `id-${Date.now()}${Math.random().toString(16)}`;
 
 function chatStripe(isAi, value, uniqueId) {
 	return `
-      <div class="wrapper ${isAi && 'ai'}">
-        <div class="chat">
-          <div class="profile">
-            <img
-              src="${isAi ? bot : user}" 
-              alt="${isAi ? 'bot' : 'user'}"
-            />
-          </div>
-          <div class="message" id='${uniqueId}'>
-            <p>${value}</p>
-          </div>
+        <div class="wrapper ${isAi && 'ai'}">
+            <div class="chat">
+                <div class="profile">
+                    <img
+						src=${isAi ? bot : user} 
+						alt="${isAi ? 'bot' : 'user'}" 
+                    />
+                </div>
+                <div class="message" id=${uniqueId}>${value}</div>
+            </div>
         </div>
-      </div>
     `;
 }
 
@@ -68,6 +66,31 @@ async function handleSubmit(event) {
 	const messageDiv = document.getElementById(uniqueId);
 
 	loader(messageDiv);
+
+	const response = await fetch('http://localhost:5000', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			prompt: data.get('prompt'),
+		}),
+	});
+
+	clearInterval(loadInterval);
+	messageDiv.innerHTML = '';
+
+	if (response.ok) {
+		const data = await response.json();
+		const parsedData = data.bot.trim();
+
+		typeText(messageDiv, parsedData);
+	} else {
+		const error = await response.text();
+		typeText(messageDiv, 'Something went wrong!');
+
+		alert(error)
+	}
 }
 
 form.addEventListener('submit', handleSubmit);
