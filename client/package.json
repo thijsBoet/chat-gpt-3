@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "Implementation of chatGPT3 API",
 	"main": "script.js",
+	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
